@@ -2,12 +2,18 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Exception\MissingHexException;
+use Exception\InvalidRadiusException;
 use Model\Planet\SolarSystem;
 use Model\Planet\GasPlanet;
 use Model\Planet\SolidPlanet;
 use Service\PlanetRenderer;
+use Service\CustomPlanetRenderer;
+use Service\CustomPlanetRendererComposition;
 
-$renderer = new PlanetRenderer();
+//$renderer = new PlanetRenderer();
+//$renderer = new CustomPlanetRenderer();
+$renderer = new CustomPlanetRendererComposition(new PlanetRenderer());
 
 $planets = [
     new SolidPlanet('Mercury', 10, 'cccccc'),
@@ -30,6 +36,14 @@ $solarSystem = new SolarSystem($planets);
 <?php foreach ($solarSystem as $planet) : ?>
     <h3><?php echo $planet; ?></h3>
     <div>
-        <?php echo $renderer->render($planet); ?>
+        <?php
+            try {
+                echo $renderer->render($planet);
+            } catch (InvalidRadiusException $e) {
+                echo 'Planet cannot be rendered.';
+            } catch (MissingHexException $e) {
+                echo 'Invalid planet color.';
+            }
+        ?>
     </div>
 <?php endforeach; ?>

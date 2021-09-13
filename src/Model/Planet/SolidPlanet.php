@@ -2,7 +2,7 @@
 
 namespace Model\Planet;
 
-class SolidPlanet extends AbstractPlanet implements PlanetInterface
+class SolidPlanet extends AbstractPlanet
 {
     private $radius;
 

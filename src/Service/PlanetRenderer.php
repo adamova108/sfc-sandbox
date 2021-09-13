@@ -6,7 +6,7 @@ use Exception\InvalidRadiusException;
 use Exception\MissingHexException;
 use Model\Planet\PlanetInterface;
 
-class PlanetRenderer
+class PlanetRenderer implements PlanetRendererInterface
 {
     public function render(PlanetInterface $planet)
     {
